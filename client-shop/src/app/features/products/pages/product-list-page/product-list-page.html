@@ -1,0 +1,19 @@
+<section class="product-list-page">
+  <h1>Products</h1>
+
+  @if (loading()) {
+    <p class="state-message">Loading products…</p>
+  } @else if (error()) {
+    <p class="state-message state-message--error">
+      Could not load products. Please check that the backend is running and try again.
+    </p>
+  } @else if (activeProducts().length === 0) {
+    <p class="state-message">No products are available right now.</p>
+  } @else {
+    <div class="product-list-page__grid">
+      @for (product of activeProducts(); track product.id) {
+        <app-product-card [product]="product" />
+      }
+    </div>
+  }
+</section>

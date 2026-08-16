@@ -1,0 +1,27 @@
+<section class="home-page">
+  <div class="home-page__intro">
+    <h1>Welcome to SimpleShop</h1>
+    <p>Browse our catalog and find quality products at great prices.</p>
+    <a class="home-page__cta" routerLink="/products">Shop all products</a>
+  </div>
+
+  <div class="home-page__featured">
+    <h2>Featured Products</h2>
+
+    @if (loading()) {
+      <p class="state-message">Loading products…</p>
+    } @else if (error()) {
+      <p class="state-message state-message--error">
+        Could not load products right now. Please check that the backend is running and try again.
+      </p>
+    } @else if (featuredProducts().length === 0) {
+      <p class="state-message">No products are available right now.</p>
+    } @else {
+      <div class="home-page__grid">
+        @for (product of featuredProducts(); track product.id) {
+          <app-product-card [product]="product" />
+        }
+      </div>
+    }
+  </div>
+</section>

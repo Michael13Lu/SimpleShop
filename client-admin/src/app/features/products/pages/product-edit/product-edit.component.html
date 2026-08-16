@@ -1,0 +1,20 @@
+<section class="product-edit">
+  <h1>Edit Product</h1>
+
+  @if (error()) {
+    <div class="alert alert--error">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="state-message">Loading product…</div>
+  } @else if (product()) {
+    <app-product-form
+      submitLabel="Save Changes"
+      [showIsActive]="true"
+      [initialValue]="product()"
+      [isSaving]="isSaving()"
+      (formSubmit)="onSubmit($event)"
+      (cancel)="onCancel()"
+    />
+  }
+</section>

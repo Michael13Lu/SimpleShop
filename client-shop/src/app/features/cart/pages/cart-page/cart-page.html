@@ -1,0 +1,57 @@
+<section class="cart-page">
+  <h1>Your Cart</h1>
+
+  @if (items().length === 0) {
+    <div class="state-message">
+      <p>Your cart is empty.</p>
+      <a routerLink="/products">Browse products</a>
+    </div>
+  } @else {
+    <table class="cart-page__table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Line Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items(); track item.productId) {
+          <tr>
+            <td>{{ item.productName }}</td>
+            <td>{{ item.price | number: '1.2-2' }} $</td>
+            <td>
+              <div class="cart-page__quantity">
+                <button type="button" (click)="decrease(item.productId)">-</button>
+                <span>{{ item.quantity }}</span>
+                <button
+                  type="button"
+                  [disabled]="item.quantity >= item.maxStock"
+                  (click)="increase(item.productId)"
+                >
+                  +
+                </button>
+              </div>
+            </td>
+            <td>{{ item.price * item.quantity | number: '1.2-2' }} $</td>
+            <td>
+              <button class="cart-page__remove" type="button" (click)="remove(item.productId)">
+                Remove
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="cart-page__summary">
+      <div>
+        <p>Total items: {{ totalItemCount() }}</p>
+        <p class="cart-page__total-price">Total price: {{ totalPrice() | number: '1.2-2' }} $</p>
+      </div>
+      <button class="cart-page__clear" type="button" (click)="clear()">Clear Cart</button>
+    </div>
+  }
+</section>

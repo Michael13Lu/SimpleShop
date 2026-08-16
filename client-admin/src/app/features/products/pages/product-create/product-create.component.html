@@ -1,0 +1,14 @@
+<section class="product-create">
+  <h1>Add Product</h1>
+
+  @if (error()) {
+    <div class="alert alert--error">{{ error() }}</div>
+  }
+
+  <app-product-form
+    submitLabel="Create Product"
+    [isSaving]="isSaving()"
+    (formSubmit)="onSubmit($event)"
+    (cancel)="onCancel()"
+  />
+</section>

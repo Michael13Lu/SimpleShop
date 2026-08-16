@@ -1,0 +1,54 @@
+<section class="product-list">
+  <div class="product-list__header">
+    <h1>Products</h1>
+    <a class="btn btn--primary" routerLink="/products/new">Add Product</a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert--error">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="state-message">Loading products…</div>
+  } @else if (products().length === 0) {
+    @if (!error()) {
+      <div class="state-message">No products yet. Click "Add Product" to create one.</div>
+    }
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Active</th>
+            <th>Created</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products(); track product.id) {
+            <tr>
+              <td>{{ product.name }}</td>
+              <td class="description-cell">{{ product.description || '—' }}</td>
+              <td>{{ product.price | number: '1.2-2' }}</td>
+              <td>{{ product.stockQuantity }}</td>
+              <td>
+                <span class="badge" [class.badge--active]="product.isActive" [class.badge--inactive]="!product.isActive">
+                  {{ product.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td>{{ product.createdAtUtc | date: 'mediumDate' }}</td>
+              <td class="actions-cell">
+                <a class="link" [routerLink]="['/products', product.id, 'edit']">Edit</a>
+                <button type="button" class="link link--danger" (click)="deleteProduct(product)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

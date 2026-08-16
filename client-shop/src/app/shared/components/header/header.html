@@ -1,0 +1,16 @@
+<header class="header">
+  <div class="header__brand">
+    <a routerLink="/">SimpleShop</a>
+  </div>
+
+  <nav class="header__nav">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/products" routerLinkActive="active">Products</a>
+    <a routerLink="/cart" routerLinkActive="active" class="header__cart">
+      Cart
+      @if (totalItemCount() > 0) {
+        <span class="header__cart-badge">{{ totalItemCount() }}</span>
+      }
+    </a>
+  </nav>
+</header>

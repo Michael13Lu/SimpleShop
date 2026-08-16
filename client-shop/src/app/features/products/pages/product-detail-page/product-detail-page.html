@@ -1,0 +1,43 @@
+<section class="product-detail-page">
+  @switch (state()) {
+    @case ('loading') {
+      <p class="state-message">Loading product…</p>
+    }
+    @case ('error') {
+      <p class="state-message state-message--error">
+        Could not load this product. Please check that the backend is running and try again.
+      </p>
+    }
+    @case ('not-found') {
+      <div class="state-message">
+        <p>This product could not be found.</p>
+        <a routerLink="/products">Back to products</a>
+      </div>
+    }
+    @case ('success') {
+      @if (product(); as product) {
+        <a class="product-detail-page__back" routerLink="/products">&larr; Back to products</a>
+
+        <h1>{{ product.name }}</h1>
+
+        @if (product.description) {
+          <p class="product-detail-page__description">{{ product.description }}</p>
+        }
+
+        <p class="product-detail-page__price">{{ product.price | number: '1.2-2' }} $</p>
+
+        @if (outOfStock) {
+          <p class="product-detail-page__stock product-detail-page__stock--out">Out of stock</p>
+        } @else {
+          <p class="product-detail-page__stock">In stock: {{ product.stockQuantity }}</p>
+        }
+
+        <p class="product-detail-page__status">
+          Status: {{ product.isActive ? 'Active' : 'Inactive' }}
+        </p>
+
+        <button type="button" [disabled]="outOfStock" (click)="addToCart()">Add to Cart</button>
+      }
+    }
+  }
+</section>
