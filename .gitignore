@@ -23,3 +23,6 @@ dist/
 # System files
 .DS_Store
 Thumbs.db
+
+# Claude Code local session data
+.claude/
